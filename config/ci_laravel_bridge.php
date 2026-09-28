@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'manifest_path' => bootstrap_path('cache/ci-laravel-owned-routes.php'),
+    // Relative paths are resolved from the Laravel application's base path.
+    'manifest_path' => 'bootstrap/cache/ci-laravel-owned-routes.php',
 
     // When true, a matching Laravel URI/domain is owned by Laravel even when
     // the incoming HTTP method is unsupported, preserving Laravel 405 behavior.
@@ -13,7 +14,7 @@ return [
 
     'route_files' => [
         [
-            'path' => base_path('routes/routes_laravel.php'),
+            'path' => 'routes/routes_laravel.php',
             'middleware' => ['web'],
             'required' => false,
         ],

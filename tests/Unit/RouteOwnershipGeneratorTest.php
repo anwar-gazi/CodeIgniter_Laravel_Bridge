@@ -45,6 +45,25 @@ class RouteOwnershipGeneratorTest extends TestCase
         (new RouteOwnershipGenerator($router->getRoutes()))->generate([], true, false);
     }
 
+    public function testItGeneratesAManifestFromLaravelRouteCache(): void
+    {
+        $router = $this->router();
+        $router->get('cached-route/{id}', 'CachedController@show')
+            ->where('id', '[0-9]+')
+            ->name('cached.show');
+
+        $compiled = $router->getRoutes()->compile();
+        $router->setCompiledRoutes($compiled);
+
+        $manifest = (new RouteOwnershipGenerator($router->getRoutes()))->generate([], true, false);
+
+        self::assertSame(1, $manifest['route_count']);
+        self::assertSame('cached.show', $manifest['routes'][0]['name']);
+        self::assertTrue(
+            (new RouteOwnershipMatcher())->matches($manifest, 'GET', 'example.com', '/cached-route/42')
+        );
+    }
+
     private function router(): Router
     {
         $container = new Container();

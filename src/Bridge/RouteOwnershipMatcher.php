@@ -125,19 +125,17 @@ class RouteOwnershipMatcher
         $path = '/' . ltrim($path, '/');
         $baseUri = '/' . trim($baseUri, '/');
 
-        if ($baseUri === '/') {
-            return $path;
+        if ($baseUri !== '/') {
+            if ($path === $baseUri) {
+                $path = '/';
+            } elseif (strpos($path, $baseUri . '/') === 0) {
+                $path = substr($path, strlen($baseUri)) ?: '/';
+            } else {
+                return null;
+            }
         }
 
-        if ($path === $baseUri) {
-            return '/';
-        }
-
-        if (strpos($path, $baseUri . '/') !== 0) {
-            return null;
-        }
-
-        return substr($path, strlen($baseUri)) ?: '/';
+        return rawurldecode(rtrim($path, '/') ?: '/');
     }
 
     private function normalizeHost(string $host): string

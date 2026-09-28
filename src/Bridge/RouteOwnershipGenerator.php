@@ -2,15 +2,15 @@
 
 namespace AnwarGazi\CiLaravelSupport\Bridge;
 
-use Illuminate\Routing\RouteCollection;
+use Illuminate\Routing\RouteCollectionInterface;
 use Symfony\Component\Routing\RouteCompiler;
 
 class RouteOwnershipGenerator
 {
-    /** @var RouteCollection */
+    /** @var RouteCollectionInterface */
     private $routes;
 
-    public function __construct(RouteCollection $routes)
+    public function __construct(RouteCollectionInterface $routes)
     {
         $this->routes = $routes;
     }
@@ -22,7 +22,7 @@ class RouteOwnershipGenerator
     ): array {
         $entries = [];
 
-        foreach ($this->routes as $route) {
+        foreach ($this->routes->getRoutes() as $route) {
             if (!empty($route->isFallback) && !$allowFallbackRoutes) {
                 throw new \LogicException(
                     'Laravel fallback routes cannot be cached while CodeIgniter routes still share the front controller.'

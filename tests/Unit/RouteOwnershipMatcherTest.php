@@ -75,6 +75,26 @@ class RouteOwnershipMatcherTest extends TestCase
         self::assertFalse($matcher->matches($manifest, 'GET', 'example.com', '/legacy-other/orders', 'http', '/legacy'));
     }
 
+    public function testItUsesLaravelUriDecodingAndTrailingSlashSemantics(): void
+    {
+        $route = [
+            'name' => 'orders.show',
+            'uri' => 'orders/{order}',
+            'methods' => ['GET', 'HEAD'],
+            'schemes' => [],
+            'path_regex' => '{^/orders/(?P<order>[0-9]+)$}sD',
+            'host_regex' => '',
+        ];
+
+        $matcher = new RouteOwnershipMatcher();
+        $manifest = $this->manifest([$route], true);
+
+        self::assertTrue($matcher->matches($manifest, 'GET', 'example.com', '/orders/42/'));
+        self::assertTrue($matcher->matches($manifest, 'GET', 'example.com', '/orders/%34%32'));
+        self::assertFalse($matcher->matches($manifest, 'GET', 'example.com', '/orders/4%2F2'));
+        self::assertFalse($matcher->matches($manifest, 'GET', 'example.com', '/orders/42%2F'));
+    }
+
     public function testItRejectsMalformedRouteEntries(): void
     {
         $manifest = $this->manifest([[

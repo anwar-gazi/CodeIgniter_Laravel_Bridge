@@ -2,6 +2,7 @@
 
 namespace AnwarGazi\CiLaravelSupport;
 
+use AnwarGazi\CiLaravelSupport\Bridge\BridgePathResolver;
 use AnwarGazi\CiLaravelSupport\Bridge\RouteOwnershipGenerator;
 use AnwarGazi\CiLaravelSupport\Bridge\RouteOwnershipManifestWriter;
 use AnwarGazi\CiLaravelSupport\Console\CacheOwnedRoutesCommand;
@@ -19,6 +20,10 @@ class CiLaravelBridgeServiceProvider extends ServiceProvider
         $this->app->singleton(SecurityBaseline::class);
         $this->app->make(SecurityBaseline::class)->assertSatisfied();
 
+        $this->app->singleton(BridgePathResolver::class, function ($app) {
+            return new BridgePathResolver($app->basePath());
+        });
+
         $this->app->singleton(RouteOwnershipGenerator::class, function ($app) {
             return new RouteOwnershipGenerator($app['router']->getRoutes());
         });
@@ -26,7 +31,7 @@ class CiLaravelBridgeServiceProvider extends ServiceProvider
         $this->app->singleton(RouteOwnershipManifestWriter::class);
     }
 
-    public function boot(Router $router): void
+    public function boot(Router $router, BridgePathResolver $pathResolver): void
     {
         $this->publishes([
             __DIR__ . '/../config/ci_laravel_bridge.php' => config_path('ci_laravel_bridge.php'),
@@ -45,18 +50,26 @@ class CiLaravelBridgeServiceProvider extends ServiceProvider
 
         if (!$this->app->routesAreCached()) {
             foreach ((array) config('ci_laravel_bridge.route_files', []) as $definition) {
-                $this->loadRouteDefinition($router, $definition);
+                $this->loadRouteDefinition($router, $pathResolver, $definition);
             }
         }
     }
 
-    private function loadRouteDefinition(Router $router, $definition): void
+    private function loadRouteDefinition(
+        Router $router,
+        BridgePathResolver $pathResolver,
+        $definition
+    ): void
     {
         if (!is_array($definition) || empty($definition['path'])) {
             throw new \InvalidArgumentException('Every Laravel bridge route definition requires a path.');
         }
 
-        $path = $definition['path'];
+        if (!is_string($definition['path'])) {
+            throw new \InvalidArgumentException('Every Laravel bridge route path must be a string.');
+        }
+
+        $path = $pathResolver->resolve($definition['path']);
         $required = !empty($definition['required']);
 
         if (!is_file($path)) {

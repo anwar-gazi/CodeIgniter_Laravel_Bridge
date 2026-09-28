@@ -2,6 +2,7 @@
 
 namespace AnwarGazi\CiLaravelSupport\Console;
 
+use AnwarGazi\CiLaravelSupport\Bridge\BridgePathResolver;
 use AnwarGazi\CiLaravelSupport\Bridge\RouteOwnershipGenerator;
 use AnwarGazi\CiLaravelSupport\Bridge\RouteOwnershipManifestWriter;
 use Illuminate\Console\Command;
@@ -12,8 +13,11 @@ class CacheOwnedRoutesCommand extends Command
 
     protected $description = 'Generate the pre-framework Laravel route ownership manifest';
 
-    public function handle(RouteOwnershipGenerator $generator, RouteOwnershipManifestWriter $writer): int
-    {
+    public function handle(
+        RouteOwnershipGenerator $generator,
+        RouteOwnershipManifestWriter $writer,
+        BridgePathResolver $pathResolver
+    ): int {
         $path = $this->option('path') ?: config('ci_laravel_bridge.manifest_path');
         if (!is_string($path) || $path === '') {
             $this->error('The ci_laravel_bridge.manifest_path configuration value is required.');
@@ -21,6 +25,7 @@ class CacheOwnedRoutesCommand extends Command
             return 1;
         }
 
+        $path = $pathResolver->resolve($path);
         $sourceFiles = [];
         foreach ((array) config('ci_laravel_bridge.route_files', []) as $definition) {
             if (!is_array($definition) || empty($definition['path'])) {
@@ -29,9 +34,17 @@ class CacheOwnedRoutesCommand extends Command
                 return 1;
             }
 
-            if (!is_file($definition['path'])) {
+            if (!is_string($definition['path'])) {
+                $this->error('Every Laravel bridge route path must be a string.');
+
+                return 1;
+            }
+
+            $sourcePath = $pathResolver->resolve($definition['path']);
+
+            if (!is_file($sourcePath)) {
                 if (!empty($definition['required'])) {
-                    $this->error("Required Laravel bridge route file not found [{$definition['path']}].");
+                    $this->error("Required Laravel bridge route file not found [{$sourcePath}].");
 
                     return 1;
                 }
@@ -39,7 +52,7 @@ class CacheOwnedRoutesCommand extends Command
                 continue;
             }
 
-            $sourceFiles[] = $definition['path'];
+            $sourceFiles[] = $sourcePath;
         }
 
         $manifest = $generator->generate(

@@ -114,7 +114,9 @@ accepts them exclusively from trusted proxies:
 ### 3. Register native Laravel routes
 
 The default configuration loads `laravel/routes/routes_laravel.php` in the
-`web` middleware group:
+`web` middleware group. Configuration paths are resolved from the Laravel
+application root unless they are absolute, so they remain portable across
+release directories and work with Laravel's configuration cache:
 
 ```php
 <?php

@@ -1,4 +1,13 @@
 # Changelog
+## v2.0.1 28-Sep-2026 08:01 PM +06
+- fix(runtime): complete Laravel 8 host discovery, cached-route, and URI matching compatibility
+  - Replaced the unavailable Laravel 8 `bootstrap_path()` config helper with portable application-relative paths and centralized absolute-path resolution.
+  - Applied the same path resolution to route loading, required-file validation, manifest source hashing, configured manifest destinations, and `--path` overrides.
+  - Accepted Laravel's `CompiledRouteCollection` as well as its uncached `RouteCollection`, allowing `ci-bridge:cache-routes` to run after `php artisan route:cache` in the documented deployment order.
+  - Aligned pre-framework ownership matching with Laravel 8's raw URL decoding and trailing-slash behavior, including encoded-slash handling.
+  - Added regression coverage for helper-free configuration, Unix and Windows paths, compiled route collections, and Laravel-equivalent URI normalization.
+  - Verified package auto-discovery, runtime security checks, native route listing, route caching, ownership generation, Laravel-kernel responses, domain routes, constraints, Laravel 405 responses, and CI fallthrough in an official Laravel 8 application skeleton.
+
 ## v2.0.0 28-Sep-2026 03:11 PM +06
 - feat(runtime): replace the CI-owned Laravel emulation path with a native Laravel 8 HTTP-kernel bridge
   - **Single-process framework dispatch**:
