@@ -1,0 +1,29 @@
+{
+    "name": "anwargazi/ci-laravel-support",
+    "version": "1.0.0",
+    "description": "Pluggable Laravel-style support layer for CodeIgniter 3 — Blade templating, Eloquent ORM, named routing, Request object, and env() helper.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "illuminate/view": "^6.0",
+        "illuminate/filesystem": "^6.0",
+        "illuminate/config": "^6.0",
+        "illuminate/events": "^6.0",
+        "illuminate/database": "^6.0",
+        "symfony/var-dumper": "^4.4",
+        "illuminate/container": "^6.0",
+        "illuminate/cache": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AnwarGazi\\CiLaravelSupport\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "scripts": {
+        "test": "php tests/regression.php"
+    }
+}

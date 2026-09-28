@@ -1,0 +1,1 @@
+this package's goal is to provide full modern laravel support to legacy CodeIgniter projects. Vision: all new developments in the CodeIgniter project (done using the package) becomes full laravel compliant, so that the legacy project's base(CodeIgniter) can easily be migrated to Laravel when granually full codebase becomes Laravel compliant.

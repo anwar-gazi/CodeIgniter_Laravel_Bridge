@@ -1,0 +1,28 @@
+# Changelog
+## v1.0.0 28-Sep-2026 02:03 PM +06
+- fix(compatibility): harden Laravel-style routing, requests, responses, Blade rendering, configuration, and release verification for CodeIgniter 3
+  - **HTTP Routing and Controller Dispatch ([`Route.php`](src/Route.php) / [`LaravelController.php`](src/LaravelController.php))**:
+    - Preserved GET, POST, and other verb-specific actions registered against the same URI by compiling routes into CodeIgniter 3's nested HTTP-method format.
+    - Added PUT, PATCH, DELETE, OPTIONS, and complete `Route::any()` verb support, including HEAD.
+    - Bound `_remap()` execution to the matched route action instead of the potentially overwritten CodeIgniter method value.
+  - **Request Input Semantics ([`Request.php`](src/Request.php))**:
+    - Corrected missing input and query values to return their supplied defaults.
+    - Corrected `has()` so absent keys return `false` while explicitly present null-valued keys remain detectable.
+    - Retained POST precedence when GET and POST contain the same input key.
+  - **Response Status, Headers, and Downloads ([`LaravelResponseBuilder.php`](src/LaravelResponseBuilder.php))**:
+    - Applied fluent status codes to JSON, text, and streamed responses when no method-level status is supplied.
+    - Applied fluent headers consistently to JSON, text, streamed, redirect, raw-content, and download responses.
+    - Hardened download filenames against response-header injection and guarded output-buffer cleanup.
+  - **Blade and View Safety ([`BladeEngine.php`](src/BladeEngine.php) / [`View.php`](src/View.php))**:
+    - Escaped literal component attributes safely when generating compiled PHP, including values containing apostrophes.
+    - Replaced exception-driven layout fallback with explicit Blade view existence checks.
+    - Prevented rendered view exceptions from disclosing messages, paths, and stack traces to users while retaining CodeIgniter error logging.
+  - **Environment, Cache, and Compatibility Aliases ([`Env.php`](src/Env.php) / [`CacheEngine.php`](src/CacheEngine.php) / [`helpers.php`](src/helpers.php))**:
+    - Preserved host-provided environment values over `.env` entries, rejected invalid environment keys, and surfaced unreadable environment files.
+    - Added cache configuration support for Illuminate configuration repository objects as well as arrays.
+    - Restored the documented lazy `Laravel_Controller` compatibility alias and aligned alias documentation with runtime behavior.
+  - **Automated Regression Coverage ([`regression.php`](tests/regression.php))**:
+    - Added dependency-free coverage for HTTP verb route preservation, route-action dispatch, request defaults, Blade attribute compilation, environment precedence, response status handling, and the legacy controller alias.
+    - Added `composer test` as the package-level regression command.
+    - Verified all source and test files under PHP 7.3.33 with no syntax errors.
+    - Verified the regression suite passes with zero failures and Composer package validation succeeds.
