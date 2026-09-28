@@ -1,0 +1,52 @@
+diff --git a/src/DocParser.php b/src/DocParser.php
+--- a/src/DocParser.php
++++ b/src/DocParser.php
+@@ -50,11 +50,14 @@ final class DocParser implements DocParserInterface
+      */
+     public function parse(string $input): Document
+     {
++        $this->assertInputWithinResourceLimits($input);
++
+         $document = new Document();
+ 
+         $preParsedEvent = new DocumentPreParsedEvent($document, new MarkdownInput($input));
+         $this->environment->dispatch($preParsedEvent);
+         $markdown = $preParsedEvent->getMarkdown();
++        $this->assertInputWithinResourceLimits($markdown->getContent());
+ 
+         $context = new Context($document, $this->environment);
+ 
+@@ -73,6 +77,33 @@ final class DocParser implements DocParserInterface
+         return $document;
+     }
+ 
++    /**
++     * Bound work performed by the legacy parser when handling untrusted input.
++     *
++     * @param string $input
++     *
++     * @throws \RuntimeException
++     *
++     * @return void
++     */
++    private function assertInputWithinResourceLimits(string $input): void
++    {
++        if (\strlen($input) > 262144) {
++            throw new \RuntimeException('Markdown input exceeds the 262144 byte safety limit.');
++        }
++
++        $lines = \preg_split('/\r\n|\n|\r/', $input);
++        if ($lines === false) {
++            throw new \RuntimeException('Unable to inspect Markdown input lines.');
++        }
++
++        foreach ($lines as $line) {
++            if (\strlen($line) > 2048) {
++                throw new \RuntimeException('Markdown input exceeds the 2048 byte per-line safety limit.');
++            }
++        }
++    }
++
+     private function incorporateLine(ContextInterface $context): void
+     {
+         $context->getBlockCloser()->resetTip();

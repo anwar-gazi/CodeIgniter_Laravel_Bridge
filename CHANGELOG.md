@@ -1,4 +1,31 @@
 # Changelog
+## v2.0.0 28-Sep-2026 03:11 PM +06
+- feat(runtime): replace the CI-owned Laravel emulation path with a native Laravel 8 HTTP-kernel bridge
+  - **Single-process framework dispatch**:
+    - Added a dependency-free pre-autoload dispatcher that selects Laravel or CodeIgniter before either framework boots.
+    - Added configurable Laravel bootstrap, Composer autoload, ownership manifest, base-URI, scheme, and host resolution paths.
+    - Added an end-to-end subprocess test proving Laravel-owned requests execute an HTTP kernel while legacy requests continue to CI.
+  - **Native Laravel route ownership**:
+    - Added Laravel route collection compilation with methods, schemes, domains, parameters, and Symfony constraint regexes.
+    - Added checksum validation, strict manifest schema checks, atomic writes, Laravel-native 405 ownership, and fallback-route rejection during coexistence.
+    - Added the `ci-bridge:cache-routes` command, optional/required route-file handling, package configuration, and automatic service-provider discovery.
+    - Respected Laravel's native route cache lifecycle to prevent duplicate route registration in cached deployments.
+  - **Pinned PHP 7.3 Laravel runtime**:
+    - Replaced the Illuminate 6 component set with the complete Laravel Framework 8.83.29 dependency graph.
+    - Pinned CommonMark 1.4.3 and PHPUnit 9.6.37 for PHP 7.3.33 compatibility.
+    - Added the `ci-bridge:verify-runtime` command and a fail-closed application-boot baseline for exact versions and installed patch markers.
+  - **Security maintenance for end-of-life dependencies**:
+    - Added a reproducible Laravel email-validation and SwiftMailer address hardening patch.
+    - Added core CommonMark document and per-line work bounds for the published parser denial-of-service advisories.
+    - Documented two Laravel advisories whose affected later-version implementations are absent from Laravel 8.83.29.
+    - Kept global Composer advisory blocking enabled while limiting exceptions to six named IDs with explicit reasons and fatal patch failures.
+    - Documented Laravel 8's residual abandoned SwiftMailer dependency and kept it visible as a non-failing audit report while advisory failures remain enabled.
+  - **Migration and deployment documentation**:
+    - Documented the one-server/two-application layout, separate autoload trees, native route-file transition, deployment order, trusted-proxy handling, manifest regeneration, authentication boundaries, and final CI retirement.
+  - **Automated coverage**:
+    - Added unit and integration coverage for route matching/generation, host and scheme constraints, base URIs, 405 behavior, fallback rejection, malformed/tampered manifests, security backports, security baseline verification, and framework dispatch.
+    - Retained the v1 dependency-free compatibility regression suite as a required Composer test stage.
+
 ## v1.0.0 28-Sep-2026 02:03 PM +06
 - fix(compatibility): harden Laravel-style routing, requests, responses, Blade rendering, configuration, and release verification for CodeIgniter 3
   - **HTTP Routing and Controller Dispatch ([`Route.php`](src/Route.php) / [`LaravelController.php`](src/LaravelController.php))**:

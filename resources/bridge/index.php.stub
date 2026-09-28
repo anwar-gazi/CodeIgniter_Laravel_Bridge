@@ -1,0 +1,16 @@
+<?php
+
+// Copy this block to the very top of the CodeIgniter front controller, before
+// CodeIgniter or either Composer autoloader is loaded. Adjust paths for the
+// deployment layout. This example places the Laravel app in ./laravel.
+$ciLaravelBridge = [
+    'matcher_path' => __DIR__ . '/laravel/vendor/anwargazi/ci-laravel-support/src/Bridge/RouteOwnershipMatcher.php',
+    'manifest_path' => __DIR__ . '/laravel/bootstrap/cache/ci-laravel-owned-routes.php',
+    'laravel_autoload_path' => __DIR__ . '/laravel/vendor/autoload.php',
+    'laravel_bootstrap_path' => __DIR__ . '/laravel/bootstrap/app.php',
+    'base_uri' => '',
+];
+
+require __DIR__ . '/laravel/vendor/anwargazi/ci-laravel-support/resources/bridge/dispatch.php';
+
+// Continue with the existing CodeIgniter index.php bootstrap below this block.

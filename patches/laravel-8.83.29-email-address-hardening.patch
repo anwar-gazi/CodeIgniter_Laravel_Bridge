@@ -1,0 +1,120 @@
+diff --git a/src/Illuminate/Mail/Message.php b/src/Illuminate/Mail/Message.php
+--- a/src/Illuminate/Mail/Message.php
++++ b/src/Illuminate/Mail/Message.php
+@@ -3,6 +3,7 @@
+ namespace Illuminate\Mail;
+ 
+ use Illuminate\Support\Traits\ForwardsCalls;
++use InvalidArgumentException;
+ use Swift_Attachment;
+ use Swift_Image;
+ 
+@@ -44,6 +45,8 @@ class Message
+      */
+     public function from($address, $name = null)
+     {
++        $this->ensureAddressIsSafe($address);
++
+         $this->swift->setFrom($address, $name);
+ 
+         return $this;
+@@ -59,6 +62,8 @@ class Message
+      */
+     public function sender($address, $name = null)
+     {
++        $this->ensureAddressIsSafe($address);
++
+         $this->swift->setSender($address, $name);
+ 
+         return $this;
+@@ -73,6 +78,8 @@ class Message
+      */
+     public function returnPath($address)
+     {
++        $this->ensureAddressIsSafe($address);
++
+         $this->swift->setReturnPath($address);
+ 
+         return $this;
+@@ -91,6 +98,8 @@ class Message
+     public function to($address, $name = null, $override = false)
+     {
+         if ($override) {
++            $this->ensureAddressIsSafe($address);
++
+             $this->swift->setTo($address, $name);
+ 
+             return $this;
+@@ -112,6 +121,8 @@ class Message
+     public function cc($address, $name = null, $override = false)
+     {
+         if ($override) {
++            $this->ensureAddressIsSafe($address);
++
+             $this->swift->setCc($address, $name);
+ 
+             return $this;
+@@ -133,6 +144,8 @@ class Message
+     public function bcc($address, $name = null, $override = false)
+     {
+         if ($override) {
++            $this->ensureAddressIsSafe($address);
++
+             $this->swift->setBcc($address, $name);
+ 
+             return $this;
+@@ -173,6 +186,8 @@ class Message
+      */
+     protected function addAddresses($address, $name, $type)
+     {
++        $this->ensureAddressIsSafe($address);
++
+         if (is_array($address)) {
+             $this->swift->{"set{$type}"}($address, $name);
+         } else {
+@@ -183,6 +198,31 @@ class Message
+         return $this;
+     }
+ 
++    /**
++     * Reject address values containing line breaks before they reach SwiftMailer.
++     *
++     * @param  string|array  $address
++     * @return string|array
++     *
++     * @throws \InvalidArgumentException
++     */
++    protected function ensureAddressIsSafe($address)
++    {
++        foreach ((array) $address as $key => $value) {
++            // Associative arrays use email addresses as keys and display names
++            // as values. Numerically indexed arrays contain address values.
++            $candidate = is_string($key) ? $key : $value;
++
++            if (is_string($candidate) && preg_match('/[\r\n]/', $candidate) > 0) {
++                throw new InvalidArgumentException(
++                    'Email addresses may not contain line break characters.'
++                );
++            }
++        }
++
++        return $address;
++    }
++
+     /**
+      * Set the subject of the message.
+      *
+diff --git a/src/Illuminate/Validation/Concerns/ValidatesAttributes.php b/src/Illuminate/Validation/Concerns/ValidatesAttributes.php
+--- a/src/Illuminate/Validation/Concerns/ValidatesAttributes.php
++++ b/src/Illuminate/Validation/Concerns/ValidatesAttributes.php
+@@ -737,6 +737,10 @@ trait ValidatesAttributes
+             return false;
+         }
+ 
++        if (preg_match('/[\r\n]/', (string) $value) > 0) {
++            return false;
++        }
++
+         $validations = collect($parameters)
+             ->unique()
+             ->map(function ($validation) {

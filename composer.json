@@ -1,29 +1,85 @@
 {
     "name": "anwargazi/ci-laravel-support",
-    "version": "1.0.0",
-    "description": "Pluggable Laravel-style support layer for CodeIgniter 3 — Blade templating, Eloquent ORM, named routing, Request object, and env() helper.",
+    "description": "Native Laravel 8 runtime bridge for incrementally migrating CodeIgniter 3 applications.",
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=7.2",
-        "illuminate/view": "^6.0",
-        "illuminate/filesystem": "^6.0",
-        "illuminate/config": "^6.0",
-        "illuminate/events": "^6.0",
-        "illuminate/database": "^6.0",
-        "symfony/var-dumper": "^4.4",
-        "illuminate/container": "^6.0",
-        "illuminate/cache": "^6.0"
+        "cweagans/composer-patches": "1.7.3",
+        "php": "~7.3.0",
+        "laravel/framework": "8.83.29",
+        "league/commonmark": "1.4.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.8"
     },
     "autoload": {
         "psr-4": {
             "AnwarGazi\\CiLaravelSupport\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
+    },
+    "autoload-dev": {
+        "exclude-from-classmap": [
+            "tests/regression.php"
+        ],
+        "psr-4": {
+            "AnwarGazi\\CiLaravelSupport\\Tests\\": "tests/"
+        }
     },
     "scripts": {
-        "test": "php tests/regression.php"
+        "test": [
+            "@test:phpunit",
+            "@test:legacy"
+        ],
+        "test:legacy": "php tests/regression.php",
+        "test:phpunit": "phpunit"
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "laravel/framework": {
+                "Harden Laravel 8 email validation and mail recipient handling": "patches/laravel-8.83.29-email-address-hardening.patch"
+            },
+            "league/commonmark": {
+                "Bound parser work for untrusted Markdown on PHP 7.3": "patches/commonmark-1.4.3-resource-limits.patch"
+            }
+        },
+        "laravel": {
+            "providers": [
+                "AnwarGazi\\CiLaravelSupport\\CiLaravelBridgeServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.3.33"
+        },
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        },
+        "audit": {
+            "abandoned": "report",
+            "ignore": {
+                "PKSA-3r5d-mb8f-1qw9": "Laravel 8 email validation and SwiftMailer recipient entry points are hardened by patches/laravel-8.83.29-email-address-hardening.patch.",
+                "PKSA-8qx3-n5y5-vvnd": "The affected Illuminate Validation Rules File object does not exist in Laravel 8.83.29; see SECURITY.md.",
+                "PKSA-m5cs-t1y6-qpcs": "The affected local-filesystem temporary signed URL implementation does not exist in Laravel 8.83.29; see SECURITY.md.",
+                "PKSA-fndg-qryc-dyc9": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md.",
+                "PKSA-9q1p-3s19-bp1q": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md.",
+                "PKSA-t21r-vtr5-3mdz": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md."
+            }
+        },
+        "policy": {
+            "advisories": {
+                "ignore-id": {
+                    "PKSA-3r5d-mb8f-1qw9": "Laravel 8 email validation and SwiftMailer recipient entry points are hardened by patches/laravel-8.83.29-email-address-hardening.patch.",
+                    "PKSA-8qx3-n5y5-vvnd": "The affected Illuminate Validation Rules File object does not exist in Laravel 8.83.29; see SECURITY.md.",
+                    "PKSA-m5cs-t1y6-qpcs": "The affected local-filesystem temporary signed URL implementation does not exist in Laravel 8.83.29; see SECURITY.md.",
+                    "PKSA-fndg-qryc-dyc9": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md.",
+                    "PKSA-9q1p-3s19-bp1q": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md.",
+                    "PKSA-t21r-vtr5-3mdz": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see SECURITY.md."
+                }
+            }
+        },
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }

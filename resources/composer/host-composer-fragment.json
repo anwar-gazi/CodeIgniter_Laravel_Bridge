@@ -1,0 +1,33 @@
+{
+    "require": {
+        "anwargazi/ci-laravel-support": "^2.0",
+        "cweagans/composer-patches": "1.7.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        },
+        "audit": {
+            "abandoned": "report",
+            "ignore": {
+                "PKSA-3r5d-mb8f-1qw9": "Laravel 8 email validation and SwiftMailer recipient entry points are hardened by patches/laravel-8.83.29-email-address-hardening.patch.",
+                "PKSA-8qx3-n5y5-vvnd": "The affected Illuminate Validation Rules File object does not exist in Laravel 8.83.29; see the bridge SECURITY.md.",
+                "PKSA-m5cs-t1y6-qpcs": "The affected local-filesystem temporary signed URL implementation does not exist in Laravel 8.83.29; see the bridge SECURITY.md.",
+                "PKSA-fndg-qryc-dyc9": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see the bridge SECURITY.md.",
+                "PKSA-9q1p-3s19-bp1q": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see the bridge SECURITY.md.",
+                "PKSA-t21r-vtr5-3mdz": "CommonMark parser work is bounded by patches/commonmark-1.4.3-resource-limits.patch; see the bridge SECURITY.md."
+            }
+        }
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "laravel/framework": {
+                "Harden Laravel 8 email validation and mail recipient handling": "patches/laravel-8.83.29-email-address-hardening.patch"
+            },
+            "league/commonmark": {
+                "Bound parser work for untrusted Markdown on PHP 7.3": "patches/commonmark-1.4.3-resource-limits.patch"
+            }
+        }
+    }
+}
