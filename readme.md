@@ -134,3 +134,18 @@ composer audit --locked
 In a host application, test a Laravel route, a representative CI route, and an
 unsupported method on the Laravel URI. See the complete
 [deployment checklist](docs/deployment.md).
+
+## License
+
+This project is **source-available**, not open-source software. The custom
+[Personal and Non-Profit License](LICENSE) permits personal use and modification,
+and non-profit redistribution under the same unmodified license. Every
+redistribution must provide prominent, publicly visible credit to the original
+developer. Professional or for-profit use requires prior written permission from
+Minhajul Anwar at [minhaj.me.bd@gmail.com](mailto:minhaj.me.bd@gmail.com).
+
+## Developer contact
+
+- **Name:** Minhajul Anwar
+- **Email:** [minhaj.me.bd@gmail.com](mailto:minhaj.me.bd@gmail.com)
+- **Location:** Bangladesh

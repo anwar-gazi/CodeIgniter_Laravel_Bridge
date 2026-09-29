@@ -2,7 +2,14 @@
     "name": "anwargazi/ci-laravel-support",
     "description": "Native Laravel 8 runtime bridge for incrementally migrating CodeIgniter 3 applications.",
     "type": "library",
-    "license": "MIT",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Minhajul Anwar",
+            "email": "minhaj.me.bd@gmail.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "cweagans/composer-patches": "1.7.3",
         "php": "~7.3.0",

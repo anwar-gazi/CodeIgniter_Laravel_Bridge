@@ -1,0 +1,135 @@
+CI TO LARAVEL 8 BRIDGE PERSONAL AND NON-PROFIT LICENSE
+Version 1.0 - 29 September 2026
+
+Copyright (c) 2026 Minhajul Anwar. All rights reserved.
+Contact: minhaj.me.bd@gmail.com
+
+By using, copying, modifying, or redistributing this software, you agree to
+the following terms.
+
+1. Definitions
+
+"Software" means this software package and its source code, documentation,
+and other files distributed with it, excluding Third-Party Materials described
+in Section 10.
+
+"Developer" means Minhajul Anwar.
+
+"Personal Use" means use by a natural person solely for individual,
+non-professional, and non-commercial purposes, without compensation, revenue,
+commercial advantage, or use on behalf of an organization.
+
+"Non-Profit Redistribution" means redistribution without any fee, payment,
+donation requirement, compensation, revenue, commercial advantage, or
+professional purpose.
+
+"Professional or For-Profit Use" includes use, copying, modification,
+redistribution, or deployment in connection with employment, a business,
+an organization acting in a professional capacity, paid consulting or
+contracting, an income-generating activity, internal business operations,
+or a product or service offered for compensation or commercial advantage.
+
+2. Permission Grant
+
+Subject to every condition in this License, the Developer grants you a
+limited, worldwide, royalty-free, and non-exclusive permission to:
+
+a. use, reproduce, and modify the Software for Personal Use or solely to
+   prepare a permitted Non-Profit Redistribution; and
+
+b. redistribute original or modified copies of the Software solely as
+   Non-Profit Redistribution.
+
+No patent, trademark, or other rights are granted except the copyright
+permissions expressly stated above.
+
+3. Conditions
+
+Every permitted redistribution of the Software, including a modified version,
+must satisfy all of the following conditions:
+
+a. Public credit. You must display the following credit in a reasonably
+   prominent location that is publicly visible to recipients or users:
+
+   "Original developer: Minhajul Anwar (minhaj.me.bd@gmail.com)"
+
+   For a public source repository, the credit must appear in the main README or
+   project landing page. For interactive software, it must also appear in a
+   publicly accessible About, Credits, Acknowledgements, or equivalent screen
+   or page. Credit hidden only in source code, package metadata, commit history,
+   or a non-public file does not satisfy this condition.
+
+b. Unmodified License. You must include a complete copy of this License with
+   every redistribution. You may not edit, remove, abbreviate, translate,
+   rename, replace, or otherwise modify this License text. You may not represent
+   a modified text as this License.
+
+c. Same terms. You may not relicense the Software or impose terms that conflict
+   with or reduce the requirements of this License. Recipients must receive the
+   Software under this same, unmodified License.
+
+d. Modification notice. Modified versions must be clearly identified as
+   modified and must state the date of the modification. The notice must not
+   imply that the Developer created, approved, or endorsed the modifications.
+
+e. Notices. You must retain all copyright, attribution, and legal notices
+   included with the Software.
+
+4. Professional and For-Profit Uses Are Not Granted
+
+This License does not grant permission for Professional or For-Profit Use.
+Before any such use, you must obtain a separate written license from the
+Developer.
+
+Licensing contact: Minhajul Anwar <minhaj.me.bd@gmail.com>
+
+Silence, failure to respond, or receipt of a request does not constitute
+permission.
+
+5. Ownership and Attribution
+
+The Developer retains all right, title, and interest in the Software. Permitted
+modifications do not transfer ownership of the original Software or remove the
+public-credit requirement. You may describe your own modifications accurately,
+but you may not claim authorship of the original Software.
+
+6. Termination
+
+Your permission under this License terminates automatically and immediately if
+you breach any term. Upon termination, you must stop using and redistributing
+the Software and remove all copies in your possession or control. Sections
+concerning ownership, warranty, liability, and Third-Party Materials survive
+termination.
+
+7. No Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, TITLE, AND NON-INFRINGEMENT. YOU ASSUME ALL RISK ARISING FROM USE OR
+INABILITY TO USE THE SOFTWARE.
+
+8. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE DEVELOPER SHALL NOT BE
+LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR
+OTHERWISE, ARISING FROM OR RELATED TO THE SOFTWARE OR ITS USE, MODIFICATION, OR
+REDISTRIBUTION.
+
+9. Severability and No Waiver
+
+If any provision is held unenforceable, the remaining provisions remain in
+effect to the maximum extent permitted by law. A failure to enforce any
+provision is not a waiver of that provision or any other provision.
+
+10. Third-Party Materials
+
+The Software depends on and may contain patches or references to third-party
+software. Third-Party Materials remain subject to their own copyright notices
+and license terms. This License does not replace or restrict rights granted by
+the applicable third-party licenses.
+
+11. Entire Permission
+
+This License states the complete permission granted by the Developer for the
+Software. Any use not expressly permitted requires the Developer's prior
+written permission.

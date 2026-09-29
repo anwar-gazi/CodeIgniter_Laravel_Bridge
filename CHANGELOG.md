@@ -1,4 +1,16 @@
 # Changelog
+## v3.0.0 29-Sep-2026 12:15 PM +06
+- license: adopt source-available personal and non-profit terms
+  - Replaced the package's MIT declaration with the custom CI to Laravel 8 Bridge Personal and Non-Profit License 1.0 and classified the Composer package as `proprietary`.
+  - Granted personal, non-professional use and modification, plus redistribution of original or modified copies solely on a non-profit basis.
+  - Required every redistribution to display prominent, publicly visible credit to original developer Minhajul Anwar and retain all copyright, attribution, and legal notices.
+  - Required the complete license text to remain unmodified, prohibited relicensing or conflicting downstream terms, and required modified versions to identify their changes and modification date.
+  - Reserved professional and for-profit uses for a separate written license requested through `minhaj.me.bd@gmail.com`.
+  - Preserved applicable third-party licenses and added termination, warranty, liability, severability, and ownership terms.
+  - Added Composer author metadata and README sections for licensing terms, developer credit, email, and Bangladesh location.
+  - Marked this as a major release because v3.0.0 is no longer offered under MIT; existing earlier release tags remain unchanged.
+  - Verified Composer metadata, all 34 PHPUnit tests with 72 assertions, the legacy regression suite, README links, and whitespace integrity.
+
 ## v2.0.2 29-Sep-2026 11:56 AM +06
 - docs: publish complete developer documentation
   - Reworked the root README into a concise project entry point with a runtime contract, routing overview, installation outline, command reference, migration boundaries, and task-oriented navigation.
