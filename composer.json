@@ -1,5 +1,6 @@
 {
     "name": "anwargazi/ci-laravel-support",
+    "version": "3.0.1",
     "description": "Native Laravel 8 runtime bridge for incrementally migrating CodeIgniter 3 applications.",
     "type": "library",
     "license": "proprietary",
@@ -22,7 +23,10 @@
     "autoload": {
         "psr-4": {
             "AnwarGazi\\CiLaravelSupport\\": "src/"
-        }
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
     },
     "autoload-dev": {
         "exclude-from-classmap": [

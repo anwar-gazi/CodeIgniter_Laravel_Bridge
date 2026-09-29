@@ -1,6 +1,6 @@
 {
     "require": {
-        "anwargazi/ci-laravel-support": "^2.0",
+        "anwargazi/ci-laravel-support": "^3.0",
         "cweagans/composer-patches": "1.7.3"
     },
     "config": {

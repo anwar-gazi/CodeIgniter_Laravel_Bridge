@@ -87,8 +87,10 @@ failure. Compare the host config with the supplied fragment and read
 
 ## Legacy helper or alias is undefined
 
-The current v2 Composer manifest PSR-4 autoloads classes but does not register
-`src/helpers.php` under `autoload.files`. A legacy CI integration must
-explicitly load it after Composer or maintain a host autoload entry. It is not
-needed by the native bridge and can collide with Laravel helper names. See
+The Composer bootstrap binds only the URL and redirect services needed to keep
+Laravel's globally loaded helpers compatible with CI3. It does not register
+`src/helpers.php`. A legacy CI integration that needs the additional globals or
+aliases must explicitly load that file after Composer or maintain a host
+autoload entry. It is not needed by the native bridge and can collide with
+Laravel helper names. See
 [Legacy compatibility API](legacy-compatibility-api.md).

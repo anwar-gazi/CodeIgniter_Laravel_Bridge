@@ -53,6 +53,10 @@ class BladeEngine
         $resolver->register('blade', function () use ($filesystem, $cachePath) {
             $compiler = new \Illuminate\View\Compilers\BladeCompiler($filesystem, $cachePath);
 
+            // This compatibility layer compiles anonymous tags itself and does
+            // not have a native Laravel Application container at compile time.
+            $compiler->withoutComponentTags();
+
             // Register @once / @endonce directives for illuminate/view ^6.0 compatibility
             $compiler->directive('once', function ($expression) {
                 $id = 'once_' . md5($expression ?: uniqid('', true));
@@ -90,6 +94,12 @@ class BladeEngine
         $events = new \Illuminate\Events\Dispatcher();
 
         static::$factory = new \Illuminate\View\Factory($resolver, $finder, $events);
+
+        // Laravel 8's native component compiler resolves the view factory from
+        // the global container even when Blade is running inside CodeIgniter.
+        $container = CodeIgniterCompatibility::boot();
+        $container->instance(\Illuminate\Contracts\View\Factory::class, static::$factory);
+        $container->instance('view', static::$factory);
 
         // Share a default empty ComponentAttributeBag globally to prevent undefined variable errors
         // when views/components are rendered directly without the compiler tag syntax
@@ -185,9 +195,11 @@ class BladeEngine
             return "<?php \$__env->startComponent('components.{$component}', {$attributesPhp}); ?>{$slot}<?php echo \$__env->renderComponent(); ?>";
         };
 
-        // Run iteratively to handle nested component tags (inside out)
+        // Run iteratively to handle nested component tags (inside out), while
+        // bounding malformed or adversarial templates.
         $previousValue = '';
-        while ($value !== $previousValue) {
+        $iterations = 0;
+        while ($value !== $previousValue && $iterations++ < 20) {
             $previousValue = $value;
             $value = preg_replace_callback($pattern, $callback, $value);
         }

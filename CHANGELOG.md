@@ -1,4 +1,13 @@
 # Changelog
+## v3.0.1 29-Sep-2026 05:03 PM +06
+- fix(legacy): preserve CI3 behavior in a shared Composer tree
+  - Declared package version `3.0.1` and updated the installation fragment and guide to require the v3 release line.
+  - Auto-booted CI URL and redirect adapters so Laravel 8's global `asset()` and `redirect()` helpers remain compatible with existing CI3 pages.
+  - Bound the Blade view factory in the Illuminate container and disabled Laravel's native component-tag pass before applying the bridge component compiler.
+  - Bounded iterative component compilation and retained support for nested compatibility components.
+  - Added CI URL, redirect, Blade layout, and anonymous-component regression coverage.
+  - Verified 39 PHPUnit tests with 85 assertions and the dependency-free legacy regression suite.
+
 ## v3.0.0 29-Sep-2026 12:15 PM +06
 - license: adopt source-available personal and non-profit terms
   - Replaced the package's MIT declaration with the custom CI to Laravel 8 Bridge Personal and Non-Profit License 1.0 and classified the Composer package as `proprietary`.

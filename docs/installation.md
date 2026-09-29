@@ -40,7 +40,7 @@ Copy both repository patch files into the host Laravel application's
 [`resources/composer/host-composer-fragment.json`](../resources/composer/host-composer-fragment.json)
 into the host's `composer.json`, preserving unrelated host configuration.
 
-The merged file must retain the package at `^2.0`, patch plugin `1.7.3`,
+The merged file must retain the package at `^3.0`, patch plugin `1.7.3`,
 permission for that plugin, fatal patch failures, both patch mappings, and the
 six named advisory exceptions. Do not disable advisory blocking globally.
 

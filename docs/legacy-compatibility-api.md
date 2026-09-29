@@ -8,9 +8,15 @@ native Laravel features.
 
 ## Loading
 
-Classes use the package PSR-4 mapping. The current v2 `composer.json` does not
-autoload `src/helpers.php` as a Composer file. Hosts needing global helpers or
-aliases must explicitly load it after their CI Composer autoloader:
+Classes use the package PSR-4 mapping. In a shared CI3 Composer tree, the
+package automatically binds compatibility URL and redirect services. This
+keeps Laravel's globally loaded `asset()` and `redirect()` helpers compatible
+with existing CI calls. Existing services are never replaced, so a native
+Laravel application remains authoritative.
+
+The package does not autoload `src/helpers.php`. Hosts needing its additional
+legacy globals or aliases must explicitly load it after their CI Composer
+autoloader:
 
 ```php
 require_once '/path/to/vendor/anwargazi/ci-laravel-support/src/helpers.php';
