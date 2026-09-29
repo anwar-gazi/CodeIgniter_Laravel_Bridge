@@ -1,4 +1,13 @@
 # Changelog
+## v2.0.2 29-Sep-2026 11:56 AM +06
+- docs: publish complete developer documentation
+  - Reworked the root README into a concise project entry point with a runtime contract, routing overview, installation outline, command reference, migration boundaries, and task-oriented navigation.
+  - Added role-based documentation for architecture, installation, configuration, endpoint migration, package development, deployment and operations, and troubleshooting.
+  - Documented the full pre-framework dispatch lifecycle, fail-closed ownership model, route-cache and manifest relationship, application isolation boundaries, supported route semantics, and final bridge-retirement path.
+  - Added an explicit legacy compatibility API reference covering route shims, controller binding, requests, Blade views and components, Eloquent, cache, environment loading, response handling, helpers, aliases, and current helper-loading behavior.
+  - Added operational checklists for immutable releases, permissions, production smoke tests, monitoring, rollback, proxy-derived host and scheme handling, authentication/CSRF boundaries, and common 503/404/405 failure modes.
+  - Verified all local documentation links, Markdown whitespace and code-fence integrity, the PHP 7.3 platform requirements, 34 PHPUnit tests with 72 assertions, the legacy regression suite, and the locked Composer audit.
+
 ## v2.0.1 28-Sep-2026 08:01 PM +06
 - fix(runtime): complete Laravel 8 host discovery, cached-route, and URI matching compatibility
   - Replaced the unavailable Laravel 8 `bootstrap_path()` config helper with portable application-relative paths and centralized absolute-path resolution.
